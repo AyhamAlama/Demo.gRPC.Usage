@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcService2.Protos";
+
+package customer.v1;
+
+service Customer {
+  rpc Create (CreateCustomerRequest) returns (CreateCustomerReply);
+}
+
+message CreateCustomerRequest {
+  string name = 1;
+  optional int32 age = 2;
+  Gender gender = 3;
+}
+
+message CreateCustomerReply {
+  string message = 1;
+}
+
+enum Gender{
+	MALE = 0;
+	FEMALE =1;
+}
