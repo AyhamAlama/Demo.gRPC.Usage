@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="Consumer.gRPC/Consumer.gRPC.csproj" Id="60b0e6f3-0a09-4070-9664-d65c0267e5a1" />
+  <Project Path="Consumer.Console/Consumer.Console.csproj" Id="e5ac1787-2ad2-4201-b2b9-a8d981e7b540" />
+  <Project Path="Grpc.Service.App/Grpc.Main.csproj" />
+</Solution>
