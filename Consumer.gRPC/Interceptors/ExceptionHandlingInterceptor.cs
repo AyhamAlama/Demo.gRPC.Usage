@@ -22,4 +22,9 @@ public class ExceptionHandlingInterceptor : Interceptor
             };
         }
     }
+
+    public override Task ServerStreamingServerHandler<TRequest, TResponse>(TRequest request, IServerStreamWriter<TResponse> responseStream, ServerCallContext context, ServerStreamingServerMethod<TRequest, TResponse> continuation)
+    {
+        return base.ServerStreamingServerHandler(request, responseStream, context, continuation);
+    }
 }

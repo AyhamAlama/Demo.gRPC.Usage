@@ -1,12 +1,25 @@
 syntax = "proto3";
 
+import "google/protobuf/timestamp.proto";
+
 option csharp_namespace = "GrpcService2.Protos";
 
 package customer.v1;
 
 service Customer {
   rpc Create (CreateCustomerRequest) returns (CreateCustomerReply);
+  rpc GetCustomer (CreateCustomerRequest) returns (stream CreateCustomerReply);
 }
+
+// grpc
+	// -1 client
+	// -2 server
+
+	// unary = request => response
+	// streaming
+	 // -1 server streaming
+	 // -2 client streaming
+	 // -3 bidirectional streaming
 
 message CreateCustomerRequest {
   string name = 1;
@@ -16,6 +29,7 @@ message CreateCustomerRequest {
 
 message CreateCustomerReply {
   string message = 1;
+  google.protobuf.Timestamp created_at = 2;
 }
 
 enum Gender{

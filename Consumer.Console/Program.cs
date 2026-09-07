@@ -1,7 +1,7 @@
 ﻿
 
+using Grpc.Core;
 using Grpc.Net.Client;
-using Microsoft.Extensions.DependencyInjection;
 
 var channel = GrpcChannel.ForAddress("http://localhost:5259");
 
@@ -13,41 +13,45 @@ var createCustomerRequest = new GrpcCon.CreateCustomerRequest
     Age = 30
 };
 
-var createCustomerReply = await customerClient.CreateAsync(createCustomerRequest);
+var asyncServerStreamingCall = customerClient.GetCustomer(createCustomerRequest);
 
-Console.WriteLine(createCustomerReply.Message);
+await foreach (var item in asyncServerStreamingCall.ResponseStream.ReadAllAsync())
+{
+    Console.WriteLine(item.Message);
+}
+//Console.WriteLine(createCustomerReply.Message);
 
 Console.ReadKey();
 
 // ================================
 
-var services = new ServiceCollection();
+//var services = new ServiceCollection();
 
 
-services.AddGrpcClient<GrpcCon.Customer.CustomerClient>(o =>
-{
-    o.Address = new Uri("http://localhost:5259");
-});
+//services.AddGrpcClient<GrpcCon.Customer.CustomerClient>(o =>
+//{
+//    o.Address = new Uri("http://localhost:5259");
+//});
 
-var serviceProvider = services.BuildServiceProvider();
+//var serviceProvider = services.BuildServiceProvider();
 
-var customerClientFromDI = serviceProvider.GetRequiredService<GrpcCon.Customer.CustomerClient>();
+//var customerClientFromDI = serviceProvider.GetRequiredService<GrpcCon.Customer.CustomerClient>();
 
-var createCustomerRequestFromDI = new GrpcCon.CreateCustomerRequest
-{
-    Name = "Ahmad",
-    Age = 30
-};
+//var createCustomerRequestFromDI = new GrpcCon.CreateCustomerRequest
+//{
+//    Name = "Ahmad",
+//    Age = 30
+//};
 
-var createCustomerReplyFromDI = await customerClientFromDI.CreateAsync(createCustomerRequestFromDI);
+//var createCustomerReplyFromDI = await customerClientFromDI.CreateAsync(createCustomerRequestFromDI);
 
-async static void CreateCustomer(GrpcCon.Customer.CustomerClient client)
-{
-    var createCustomerRequestFromDI = new GrpcCon.CreateCustomerRequest
-    {
-        Name = "Ahmad",
-        Age = 30
-    };
+//async static void CreateCustomer(GrpcCon.Customer.CustomerClient client)
+//{
+//    var createCustomerRequestFromDI = new GrpcCon.CreateCustomerRequest
+//    {
+//        Name = "Ahmad",
+//        Age = 30
+//    };
 
-    var createCustomerReplyFromDI = await client.CreateAsync(createCustomerRequestFromDI);
-}
+//    var createCustomerReplyFromDI = await client.CreateAsync(createCustomerRequestFromDI);
+//}
