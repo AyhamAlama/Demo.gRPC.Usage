@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+
+option csharp_namespace = "GrpcService2.Protos";
+
+package AccessUser.v1;
+
+message UserData {
+  string id = 1;
+}

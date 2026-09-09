@@ -9,8 +9,13 @@ namespace GrpcService2.Services
     {
 
 
-        public override async Task<CreateCustomerReply> Create(CreateCustomerRequest request, ServerCallContext context)
+        public override async Task<CreateCustomerReply> Create(CreateCustomerRequest request,
+            ServerCallContext context)
         {
+            var id = context.RequestHeaders.Single(e => e.Key == "id-bin");
+
+            var userData = UserData.Parser.ParseFrom(id.ValueBytes);
+
             if (string.IsNullOrWhiteSpace(request.Name))
             {
                 throw new RpcException(new Status(StatusCode.InvalidArgument, "Name is required"));

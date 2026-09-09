@@ -7,6 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Protobuf Include="Protos\access_user.proto">
+      <GrpcServices>Client</GrpcServices>
+    </Protobuf>
     <Protobuf Include="Protos\customer.proto" GrpcServices="Server" />
   </ItemGroup>
 

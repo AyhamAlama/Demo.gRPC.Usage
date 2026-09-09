@@ -1,11 +1,21 @@
-﻿
-
+﻿using Google.Protobuf;
 using Grpc.Core;
 using Grpc.Net.Client;
+using GrpcCon;
 
 var channel = GrpcChannel.ForAddress("http://localhost:5259");
 
 var customerClient = new GrpcCon.Customer.CustomerClient(channel);
+
+var userdata = new UserData
+{
+    Id = "Hello"
+};
+
+var metaData = new Metadata
+{
+    { "id-bin",userdata.ToByteArray() }
+};
 
 var createCustomerRequest = new GrpcCon.CreateCustomerRequest
 {
@@ -13,13 +23,14 @@ var createCustomerRequest = new GrpcCon.CreateCustomerRequest
     Age = 30
 };
 
-var asyncServerStreamingCall = customerClient.GetCustomer(createCustomerRequest);
+var createCustomerReply = await customerClient.CreateAsync(createCustomerRequest, metaData);
 
-await foreach (var item in asyncServerStreamingCall.ResponseStream.ReadAllAsync())
-{
-    Console.WriteLine(item.Message);
-}
-//Console.WriteLine(createCustomerReply.Message);
+//var asyncServerStreamingCall = customerClient.GetCustomer(createCustomerRequest);
+//await foreach (var item in asyncServerStreamingCall.ResponseStream.ReadAllAsync())
+//{
+//    Console.WriteLine(item.Message);
+//}
+Console.WriteLine(createCustomerReply.Message);
 
 Console.ReadKey();
 

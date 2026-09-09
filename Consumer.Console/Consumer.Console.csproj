@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="access_user.proto" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Google.Protobuf" Version="3.36.1" />
     <PackageReference Include="Grpc.AspNetCore.Server.ClientFactory" Version="2.83.0" />
     <PackageReference Include="Grpc.Net.Client" Version="2.83.0" />
@@ -19,6 +23,9 @@
   </ItemGroup>
 
 	<ItemGroup>
+		<Protobuf Include="access_user.proto">
+		  <GrpcServices>Client</GrpcServices>
+		</Protobuf>
 		<Protobuf Include="customer.proto" GrpcServices="Client" />
 	</ItemGroup>
 
