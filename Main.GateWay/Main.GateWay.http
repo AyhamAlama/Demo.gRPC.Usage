@@ -1,0 +1,6 @@
+@Main.GateWay_HostAddress = https://localhost:7268
+
+
+POST {{Main.GateWay_HostAddress}}/customers
+
+###
